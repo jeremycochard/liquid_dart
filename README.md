@@ -1,4 +1,3 @@
-````md
 # liquid_dart
 
 Moteur de templates Liquid pour Dart et Flutter.
