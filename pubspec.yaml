@@ -1,7 +1,7 @@
 name: liquid_dart
-description: A starting point for Dart libraries or applications.
+description: A LiquidJS 10.24.0 port to Dart
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/jeremycochard/liquid_dart
 
 environment:
   sdk: ^3.10.4
