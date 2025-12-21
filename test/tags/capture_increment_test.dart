@@ -37,4 +37,12 @@ void main() {
     );
     expect(out, "-1,-2");
   });
+
+  test("increment requires a valid identifier", () {
+    final engine = LiquidEngine();
+    expect(
+      () => engine.parse("{% increment 1abc %}"),
+      throwsA(isA<LiquidParseError>()),
+    );
+  });
 }

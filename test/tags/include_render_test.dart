@@ -58,6 +58,16 @@ void main() {
     expect(out, "X");
   });
 
+  test("include can use a variable template name", () async {
+    final fs = InMemoryFileSystem({"p": "Hi"});
+
+    final engine = LiquidEngine(fileSystem: fs);
+    final out = await engine.parseAndRender("{% include partial %}", {
+      "partial": "p",
+    });
+    expect(out, "Hi");
+  });
+
   test("renderFile loads template by name", () async {
     final fs = InMemoryFileSystem({"main": "Hi {{ name }}"});
 
