@@ -36,6 +36,19 @@ void main() {
     expect(out, "x");
   });
 
+  test("default filter treats blank values as missing", () async {
+    final engine = LiquidEngine();
+    final out = await engine.parseAndRender(
+      '{{ empty | default: "x" }}|{{ list | default: "y" }}|{{ map | default: "z" }}',
+      {
+        "empty": "",
+        "list": <Object?>[],
+        "map": <String, Object?>{},
+      },
+    );
+    expect(out, "x|y|z");
+  });
+
   test("unknown filter throws when strictFilters is true", () async {
     final engine = LiquidEngine(
       options: const LiquidOptions(strictFilters: true),
