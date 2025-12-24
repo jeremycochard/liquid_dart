@@ -15,19 +15,27 @@ import "../source/source_location.dart";
 import "../utils/liquid_date.dart";
 import "liquid_options.dart";
 
+/// Core engine used to parse and render Liquid templates.
 class LiquidEngine {
+  /// Active engine options.
   final LiquidOptions options;
+
+  /// Registry of filters available during rendering.
   final FilterRegistry filters = FilterRegistry();
+
+  /// Filesystem used to resolve `{% include %}` and `{% render %}` templates.
   final LiquidFileSystem fileSystem;
 
   final Map<String, LiquidTemplate> _templateCache = {};
 
+  /// Creates a new engine instance with optional configuration and filesystem.
   LiquidEngine({LiquidOptions? options, LiquidFileSystem? fileSystem})
     : options = options ?? const LiquidOptions(),
       fileSystem = fileSystem ?? NoopFileSystem() {
     _registerBuiltinFilters();
   }
 
+  /// Registers a custom filter by name.
   void registerFilter(String name, LiquidFilter fn) {
     filters.register(name, fn);
   }
@@ -811,6 +819,7 @@ class LiquidEngine {
     });
   }
 
+  /// Parses a template string into a reusable [LiquidTemplate].
   LiquidTemplate parse(String source) {
     try {
       final tokens = Lexer(source).tokenize();
@@ -848,6 +857,7 @@ class LiquidEngine {
     }
   }
 
+  /// Parses and renders a template string with the provided data.
   Future<String> parseAndRender(
     String source,
     Map<String, Object?> data,
@@ -856,6 +866,7 @@ class LiquidEngine {
     return _renderTemplate(tpl, data);
   }
 
+  /// Loads and renders a named template from the configured filesystem.
   Future<String> renderFile(String name, Map<String, Object?> data) async {
     final tpl = await _loadTemplateByName(name);
     return _renderTemplate(tpl, data);
@@ -974,6 +985,7 @@ class LiquidEngine {
   }
 }
 
+/// Parsed template ready to be rendered with a [RenderContext].
 class LiquidTemplate {
   final List<Node> nodes;
   final String source;
@@ -987,6 +999,7 @@ class LiquidTemplate {
     this.layoutLocation,
   });
 
+  /// Renders this template into [out] using [ctx].
   Future<void> renderTo(StringBuffer out, RenderContext ctx) async {
     for (final n in nodes) {
       ctx.limits.tick();

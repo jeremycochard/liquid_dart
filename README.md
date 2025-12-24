@@ -2,31 +2,29 @@
 
 Liquid template engine for Dart and Flutter.
 
-This project is a 1:1 port (behavioral compatibility goal) of **LiquidJS 10.24.0** to Dart, and was built as an **iterative experiment with GPT-5.2** (test-driven development, successive fixes, focus on compatibility).
+A Dart port of **LiquidJS 10.24.0** with a goal of behavioral compatibility (LiquidJS and Shopify-style templates). Built and maintained with test-driven development and a strong focus on real-world compatibility.
 
 ## Status
 
-- Current version: `0.1.0` (recommended: publish in `0.x` first while the API and Shopify compatibility are not finalized)
+- Current version: `1.0.1`
 - Platforms: Dart VM, Flutter (iOS, Android, web, desktop)
 - Null safety: yes
-- Rendering: async (template loading via an async filesystem)
+- Rendering: async (template loading is async)
 
 ## Installation
-
-With pub:
 
 ```bash
 dart pub add liquid_dart
 ```
 
-Or in `pubspec.yaml`:
+Or add to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  liquid_dart: ^0.1.0
+  liquid_dart: ^1.0.1
 ```
 
-## Quick example
+## Quick start
 
 ```dart
 import "package:liquid_dart/liquid_dart.dart";
@@ -45,9 +43,9 @@ Future<void> main() async {
 
 ## Template loading: include, render, layout
 
-### FileSystem (include/render/layout from files)
+`liquid_dart` does not read the disk directly. You provide a `LiquidFileSystem` implementation.
 
-`liquid_dart` does not read the disk directly. You provide a `LiquidFileSystem`.
+### FileSystem (include/render/layout from files)
 
 ```dart
 final fs = InMemoryFileSystem({
@@ -174,8 +172,6 @@ Examples:
 
 ### Tags
 
-Supported:
-
 - `assign`
 - `capture ... endcapture`
 - `if / elsif / else / endif`
@@ -203,8 +199,6 @@ Whitespace control:
 - `{%- ... -%}`
 
 ### Expressions
-
-Supported:
 
 - literals: string, number, bool, nil
 - paths: `a.b.c`
@@ -258,7 +252,7 @@ Misc:
 
 LiquidJS / Shopify compatibility:
 
-- Shopify Liquid is very broad. This library covers a very usable core, but not the entire Shopify runtime.
+- Shopify Liquid is very broad. This library covers a usable core, but not the entire Shopify runtime.
 - `where_exp` and `reject_exp` are a limited subset.
 - `date` aims for practical compatibility. Handling named timezones without a TZ database is not complete.
 - `img_url` defaults to applying a simple suffix before the extension. For CDN behavior, use `imageUrlResolver`.
@@ -267,7 +261,7 @@ Performance and security:
 
 - Filters are synchronous.
 - Render limits: depth, steps, output size.
-- Template cache: enabled by default if `cacheTemplates: true`.
+- Template cache is enabled when `cacheTemplates: true`.
 
 API:
 
@@ -277,13 +271,14 @@ API:
 
 - Common Shopify tags: `paginate`, `case/when`
 - Advanced include compat: `include ... for`, `include ... with`
-- Additional Shopify filters: `t`, `money_with_currency`, etc
+- Additional Shopify filters: `t`, `money_with_currency`, etc.
 - Benchmarks and optimizations
 
 ## Contributing
 
-PRs welcome.
+PRs are welcome.
+
 Recommended:
 
-- Add features via tests first
-- Compatibility approach: test expected behaviors (LiquidJS / Shopify)
+- Add features via tests first.
+- Compatibility approach: test expected behaviors against LiquidJS / Shopify expectations.
