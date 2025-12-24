@@ -1,4 +1,5 @@
-library;
+/// Liquid template engine for Dart and Flutter.
+library liquid_dart;
 
 export "src/engine/liquid_engine.dart";
 export "src/engine/liquid_options.dart";

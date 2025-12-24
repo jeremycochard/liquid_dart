@@ -1,6 +1,6 @@
 name: liquid_dart
-description: A LiquidJS 10.24.0 port to Dart
-version: 1.0.0
+description: Liquid template engine for Dart and Flutter, compatible with LiquidJS 10.24.0 and Shopify-style templates.
+version: 1.0.1
 repository: https://github.com/jeremycochard/liquid_dart
 
 environment:
